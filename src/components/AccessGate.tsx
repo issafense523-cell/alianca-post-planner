@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LogOut, Lock } from "lucide-react";
 import { useNavigate, useLocation, Link } from "@tanstack/react-router";
+import logo from "@/assets/logo.png";
+import storeBg from "@/assets/store-bg.jpg";
 
 export function AccessGate({ children }: { children: ReactNode }) {
   const [ok, setOk] = useState(false);
