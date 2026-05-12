@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as GerarRouteImport } from './routes/gerar'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AlbumIdRouteImport } from './routes/album.$id'
 
+const GerarRoute = GerarRouteImport.update({
+  id: '/gerar',
+  path: '/gerar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -25,32 +31,43 @@ const AlbumIdRoute = AlbumIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/gerar': typeof GerarRoute
   '/album/$id': typeof AlbumIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/gerar': typeof GerarRoute
   '/album/$id': typeof AlbumIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/gerar': typeof GerarRoute
   '/album/$id': typeof AlbumIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/album/$id'
+  fullPaths: '/' | '/gerar' | '/album/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/album/$id'
-  id: '__root__' | '/' | '/album/$id'
+  to: '/' | '/gerar' | '/album/$id'
+  id: '__root__' | '/' | '/gerar' | '/album/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GerarRoute: typeof GerarRoute
   AlbumIdRoute: typeof AlbumIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/gerar': {
+      id: '/gerar'
+      path: '/gerar'
+      fullPath: '/gerar'
+      preLoaderRoute: typeof GerarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GerarRoute: GerarRoute,
   AlbumIdRoute: AlbumIdRoute,
 }
 export const routeTree = rootRouteImport
