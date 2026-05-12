@@ -14,7 +14,68 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      albums: {
+        Row: {
+          created_at: string
+          id: string
+          is_greeting: boolean
+          name: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_greeting?: boolean
+          name: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_greeting?: boolean
+          name?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      media: {
+        Row: {
+          album_id: string
+          caption: string | null
+          created_at: string
+          id: string
+          mime_type: string
+          original_name: string | null
+          storage_path: string
+        }
+        Insert: {
+          album_id: string
+          caption?: string | null
+          created_at?: string
+          id?: string
+          mime_type: string
+          original_name?: string | null
+          storage_path: string
+        }
+        Update: {
+          album_id?: string
+          caption?: string | null
+          created_at?: string
+          id?: string
+          mime_type?: string
+          original_name?: string | null
+          storage_path?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "media_album_id_fkey"
+            columns: ["album_id"]
+            isOneToOne: false
+            referencedRelation: "albums"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
