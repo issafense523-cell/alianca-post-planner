@@ -153,7 +153,7 @@ function DayCard({ day, albums }: { day: DayPlan; albums: Album[] }) {
 function PostRow({ m, index, albumName, dayLabel }: { m: Media; index: number; albumName: string; dayLabel: string }) {
   const url = publicUrl(m.storage_path);
   const isVideo = m.mime_type.startsWith("video/");
-  const [caption, setCaption] = useState(`Aliança Óptica · ${albumName}`);
+  const [caption, setCaption] = useState(`Aliança Óptical · ${albumName}`);
 
   async function shareToWhatsApp() {
     // Try native share with file (mobile)
