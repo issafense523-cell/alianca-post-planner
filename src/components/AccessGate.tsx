@@ -84,12 +84,20 @@ function AppShell({ children, onLogout }: { children: ReactNode; onLogout: () =>
     </Link>
   );
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-30 border-b bg-card/80 backdrop-blur">
+    <div
+      className="min-h-screen bg-background"
+      style={{
+        backgroundImage: `linear-gradient(180deg, oklch(0.985 0.005 240 / 0.92), oklch(0.985 0.005 240 / 0.98)), url(${storeBg})`,
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+        backgroundPosition: "center",
+      }}
+    >
+      <header className="sticky top-0 z-30 border-b bg-card/85 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
           <button onClick={() => navigate({ to: "/" })} className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-[var(--gradient-brand)]" />
-            <span className="font-bold">Aliança Óptica</span>
+            <img src={logo} alt="Aliança Óptical" className="h-9 w-auto" />
+            <span className="font-bold tracking-tight">Aliança Óptical</span>
           </button>
           <nav className="hidden items-center gap-1 sm:flex">
             {tab("/", "Álbuns")}
