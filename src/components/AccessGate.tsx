@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LogOut, Lock } from "lucide-react";
 import { useNavigate, useLocation, Link } from "@tanstack/react-router";
+import logo from "@/assets/logo.png";
+import storeBg from "@/assets/store-bg.jpg";
 
 export function AccessGate({ children }: { children: ReactNode }) {
   const [ok, setOk] = useState(false);
@@ -21,13 +23,17 @@ export function AccessGate({ children }: { children: ReactNode }) {
 
   if (!ok) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[var(--gradient-soft)] px-4">
-        <div className="w-full max-w-sm rounded-2xl border bg-card p-8 shadow-[var(--shadow-brand)]">
-          <div className="mb-6 flex flex-col items-center gap-2 text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--gradient-brand)] text-primary-foreground">
-              <Lock className="h-6 w-6" />
-            </div>
-            <h1 className="text-2xl font-bold tracking-tight">Aliança Óptica</h1>
+      <div
+        className="relative flex min-h-screen items-center justify-center px-4"
+        style={{
+          backgroundImage: `linear-gradient(135deg, oklch(0.18 0.04 250 / 0.85), oklch(0.12 0.04 250 / 0.92)), url(${storeBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-card/95 p-8 shadow-2xl backdrop-blur">
+          <div className="mb-6 flex flex-col items-center gap-3 text-center">
+            <img src={logo} alt="Aliança Óptical" className="h-24 w-auto" />
             <p className="text-sm text-muted-foreground">Plataforma privada de gestão de posts</p>
           </div>
           <form
@@ -78,12 +84,20 @@ function AppShell({ children, onLogout }: { children: ReactNode; onLogout: () =>
     </Link>
   );
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-30 border-b bg-card/80 backdrop-blur">
+    <div
+      className="min-h-screen bg-background"
+      style={{
+        backgroundImage: `linear-gradient(180deg, oklch(0.985 0.005 240 / 0.92), oklch(0.985 0.005 240 / 0.98)), url(${storeBg})`,
+        backgroundSize: "cover",
+        backgroundAttachment: "fixed",
+        backgroundPosition: "center",
+      }}
+    >
+      <header className="sticky top-0 z-30 border-b bg-card/85 backdrop-blur">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
           <button onClick={() => navigate({ to: "/" })} className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-lg bg-[var(--gradient-brand)]" />
-            <span className="font-bold">Aliança Óptica</span>
+            <img src={logo} alt="Aliança Óptical" className="h-9 w-auto" />
+            <span className="font-bold tracking-tight">Aliança Óptical</span>
           </button>
           <nav className="hidden items-center gap-1 sm:flex">
             {tab("/", "Álbuns")}
