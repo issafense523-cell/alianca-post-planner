@@ -23,13 +23,17 @@ export function AccessGate({ children }: { children: ReactNode }) {
 
   if (!ok) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[var(--gradient-soft)] px-4">
-        <div className="w-full max-w-sm rounded-2xl border bg-card p-8 shadow-[var(--shadow-brand)]">
-          <div className="mb-6 flex flex-col items-center gap-2 text-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[var(--gradient-brand)] text-primary-foreground">
-              <Lock className="h-6 w-6" />
-            </div>
-            <h1 className="text-2xl font-bold tracking-tight">Aliança Óptica</h1>
+      <div
+        className="relative flex min-h-screen items-center justify-center px-4"
+        style={{
+          backgroundImage: `linear-gradient(135deg, oklch(0.18 0.04 250 / 0.85), oklch(0.12 0.04 250 / 0.92)), url(${storeBg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
+        <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-card/95 p-8 shadow-2xl backdrop-blur">
+          <div className="mb-6 flex flex-col items-center gap-3 text-center">
+            <img src={logo} alt="Aliança Óptical" className="h-24 w-auto" />
             <p className="text-sm text-muted-foreground">Plataforma privada de gestão de posts</p>
           </div>
           <form
