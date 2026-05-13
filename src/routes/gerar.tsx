@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { listAlbums, listAllMedia, publicUrl, type Album, type Media } from "@/lib/data";
 import { generateWeek, type AlbumCount, type DayPlan } from "@/lib/scheduler";
-import { Sparkles, Share2, Download, Sun, MessageCircle } from "lucide-react";
+import { Sparkles, Download, Sun, MessageCircle, Send } from "lucide-react";
 import { toast } from "sonner";
 
 const WHATSAPP = "865996969";
