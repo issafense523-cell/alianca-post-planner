@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { listAlbums, listAllMedia, publicUrl, type Album, type Media } from "@/lib/data";
 import { generateWeek, type AlbumCount, type DayPlan } from "@/lib/scheduler";
-import { Sparkles, Share2, Download, Sun, MessageCircle } from "lucide-react";
+import { Sparkles, Download, Sun, MessageCircle, Send } from "lucide-react";
 import { toast } from "sonner";
 
 const WHATSAPP = "865996969";
@@ -112,11 +112,16 @@ function GeneratePage() {
 
       {plan && (
         <div className="mt-8 space-y-4">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-wrap items-center justify-between gap-2">
             <h2 className="text-xl font-semibold">Plano gerado</h2>
-            <Button variant="outline" onClick={handleGenerate}>
-              <Sparkles className="mr-1 h-4 w-4" /> Regerar
-            </Button>
+            <div className="flex flex-wrap gap-2">
+              <Button variant="outline" onClick={handleGenerate}>
+                <Sparkles className="mr-1 h-4 w-4" /> Regerar
+              </Button>
+              <Button onClick={() => sendToWhatsApp(buildWeekMessage(plan, albums))}>
+                <Send className="mr-1 h-4 w-4" /> Enviar semana toda para WhatsApp
+              </Button>
+            </div>
           </div>
           {plan.map((day) => (
             <DayCard key={day.date} day={day} albums={albums} />
@@ -127,18 +132,44 @@ function GeneratePage() {
   );
 }
 
+function buildDayMessage(day: DayPlan, albums: Album[]): string {
+  const albumName = (id: string) => albums.find((a) => a.id === id)?.name ?? "";
+  const lines = [`*Aliança Óptical — ${day.weekday} ${day.date}*`, ""];
+  day.items.forEach((m, i) => {
+    lines.push(`${i + 1}. ${albumName(m.album_id)}`);
+    lines.push(publicUrl(m.storage_path));
+    lines.push("");
+  });
+  return lines.join("\n");
+}
+
+function buildWeekMessage(plan: DayPlan[], albums: Album[]): string {
+  return plan.map((d) => buildDayMessage(d, albums)).join("\n———\n\n");
+}
+
+function sendToWhatsApp(text: string) {
+  const url = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+  window.open(url, "_blank");
+  toast.success("A abrir WhatsApp...");
+}
+
 function DayCard({ day, albums }: { day: DayPlan; albums: Album[] }) {
   const albumName = (id: string) => albums.find((a) => a.id === id)?.name ?? "";
 
   return (
     <div className="rounded-2xl border bg-card p-4">
-      <div className="mb-3 flex items-center justify-between">
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <div>
           <h3 className="font-semibold">
             {day.weekday} <span className="text-muted-foreground">· {day.date}</span>
           </h3>
           <p className="text-xs text-muted-foreground">{day.items.length} posts</p>
         </div>
+        {day.items.length > 0 && (
+          <Button size="sm" onClick={() => sendToWhatsApp(buildDayMessage(day, albums))}>
+            <Send className="mr-1 h-4 w-4" /> Enviar este dia
+          </Button>
+        )}
       </div>
       <div className="space-y-3">
         {day.items.map((m, i) => (
