@@ -10,7 +10,8 @@ import { generateWeek, type AlbumCount, type DayPlan } from "@/lib/scheduler";
 import { Sparkles, Download, Sun, MessageCircle, Send } from "lucide-react";
 import { toast } from "sonner";
 
-const WHATSAPP = "865996969";
+// Número internacional completo (Angola +244) — sem "+" nem zeros, como exige wa.me
+const WHATSAPP = "244865996969";
 
 export const Route = createFileRoute("/gerar")({
   component: () => <AccessGate><GeneratePage /></AccessGate>,
